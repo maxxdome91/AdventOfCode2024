@@ -15,6 +15,7 @@ build.ninja
 
 # Clangd (ignore index folder only)
 .clangd/index/
+.cache/
 
 # IDE
 .idea/
