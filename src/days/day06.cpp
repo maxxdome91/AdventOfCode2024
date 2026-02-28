@@ -12,6 +12,7 @@
 
 #include "days/day06.hpp"
 
+#include <optional>
 #include <set>
 #include <string>
 #include <tuple>

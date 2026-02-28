@@ -2,11 +2,15 @@
 
 /**
  * @file day12.hpp
- * @brief Day 12: [TODO - Beschreibung des Puzzles]
+ * @brief Day 12: Garden Groups
  *
- * [TODO - Detaillierte Beschreibung des Puzzles]
- * Part 1: [TODO - Beschreibung von Teil 1]
- * Part 2: [TODO - Beschreibung von Teil 2]
+ * This puzzle involves a grid of garden plots represented by letters. Plots with the 
+ * same letter that are connected horizontally or vertically form a "region".
+ * 
+ * Your goal is to calculate the total price of fencing all regions.
+ *
+ * Part 1: Price = Sum of (Area * Perimeter) for all regions.
+ * Part 2: Price = Sum of (Area * Number of Sides) for all regions.
  */
 
 #include <string>
