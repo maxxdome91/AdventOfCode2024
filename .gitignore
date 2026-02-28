@@ -13,6 +13,9 @@ build.ninja
 .vscode/
 *.code-workspace
 
+# Clangd (ignore index folder only)
+.clangd/index/
+
 # IDE
 .idea/
 *.iml

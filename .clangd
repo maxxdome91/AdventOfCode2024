@@ -1,0 +1,24 @@
+# Clangd configuration file
+# See: https://clangd.llvm.org/config.html
+
+CompileFlags:
+  # Add GCC-specific includes for better IntelliSense
+  Add: [-std=c++23]
+  
+Diagnostics:
+  # Enable all diagnostics (like CLion's inspections)
+  Suppress: []
+  Warnings:
+    -Wextra
+    -Wpedantic
+    -Wunused
+    -Wsign-compare
+    
+Completion:
+  # Enable detailed completion information
+  AllScopes: true
+  IncludeInsertion: true
+  
+Hover:
+  # Show detailed hover information
+  ShowAK: true
