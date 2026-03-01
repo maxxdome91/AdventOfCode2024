@@ -107,56 +107,58 @@ namespace aoc::day10
     std::string solve_part1(const std::vector<std::string>& input)
     {
         auto result = 0;
-        // TODO:
-        // 1. Convert input strings to a 2D vector of integers.
-        auto grid = input | std::views::transform([](const std::string& line)
+        std::vector<std::vector<int>> grid;
+        grid.reserve(input.size());
+        for (const auto& line : input)
         {
-            return line | std::views::transform([](const auto& c)
+            std::vector<int> row;
+            row.reserve(line.size());
+            for (char c : line)
             {
-                return c - '0';
-            }) | std::ranges::to<std::vector<int>>();
-        }) | std::ranges::to<std::vector<std::vector<int>>>();
-        // 2. Iterate through the grid to find all '0's.
-        for (auto [r, line] : std::views::enumerate(grid))
+                row.push_back(c - '0');
+            }
+            grid.push_back(std::move(row));
+        }
+        for (size_t r = 0; r < grid.size(); ++r)
         {
-            for (auto [c, digit] : std::views::enumerate(line))
+            for (size_t c = 0; c < grid[r].size(); ++c)
             {
+                int digit = grid[r][c];
                 if (digit == 0)
                 {
                     std::set<std::pair<int, int>> found_nines;
-                    find_reachable_nines(r, c, grid, found_nines);
+                    find_reachable_nines(static_cast<int>(r), static_cast<int>(c), grid, found_nines);
                     result += found_nines.size();
                 }
             }
         }
-        // 3. For each '0', call find_reachable_nines and add the size of the resulting set to the total score.
-        // 4. Return the total score as a string.
         return std::to_string(result);
     }
 
     std::string solve_part2(const std::vector<std::string>& input)
     {
-        // TODO:
-        // 1. Convert input strings to a 2D vector of integers.
-        // 2. Iterate through the grid to find all '0's.
-        // 3. For each '0', call count_distinct_paths and add the result to the total rating.
-        // 4. Return the total rating as a string.
         auto result = 0;
-        auto grid = input | std::views::transform([](const std::string& line)
+        std::vector<std::vector<int>> grid;
+        grid.reserve(input.size());
+        for (const auto& line : input)
         {
-            return line | std::views::transform([](const auto& c)
+            std::vector<int> row;
+            row.reserve(line.size());
+            for (char c : line)
             {
-                return c - '0';
-            }) | std::ranges::to<std::vector<int>>();
-        }) | std::ranges::to<std::vector<std::vector<int>>>();
+                row.push_back(c - '0');
+            }
+            grid.push_back(std::move(row));
+        }
         std::vector<std::vector<int>> memo(grid.size(), std::vector<int>(grid[0].size(), -1));
-        for (auto [r, line] : std::views::enumerate(grid))
+        for (size_t r = 0; r < grid.size(); ++r)
         {
-            for (auto [c, digit] : std::views::enumerate(line))
+            for (size_t c = 0; c < grid[r].size(); ++c)
             {
+                int digit = grid[r][c];
                 if (digit == 0)
                 {
-                    result += count_distinct_paths(r, c, grid, memo);
+                    result += count_distinct_paths(static_cast<int>(r), static_cast<int>(c), grid, memo);
                 }
             }
         }

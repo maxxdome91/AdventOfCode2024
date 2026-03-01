@@ -85,10 +85,9 @@
 
 #include <algorithm>
 #include <cstdint>
-#include <ranges>
+#include <numeric>
 #include <string>
 #include <vector>
-#include <bits/stl_tree.h>
 
 namespace aoc::day09
 {
@@ -107,17 +106,17 @@ namespace aoc::day09
         // Example: "12345" -> [0, -1, -1, 1, 1, 1, -1, -1, -1, -1, 2, 2, 2, 2, 2]
         //          (0 is file ID, -1 is free space)
 
-        const auto total_blocks = std::ranges::fold_left(
-            disk_map | std::views::transform([](char c) { return c - '0'; }),
-            0,
-            std::plus{}
+        const auto total_blocks = std::accumulate(
+            disk_map.begin(), disk_map.end(), 0,
+            [](int sum, char c) { return sum + (c - '0'); }
         );
 
         std::vector<int> disk;
         disk.reserve(total_blocks);
         int file_index = 0;
-        for (auto [i, c] : std::views::enumerate(disk_map))
+        for (size_t i = 0; i < disk_map.size(); ++i)
         {
+            char c = disk_map[i];
             if (i % 2 == 0)
             {
                 for (int j = 0; j < (c - '0'); ++j)
@@ -148,8 +147,9 @@ namespace aoc::day09
         // The input can be ~20,000 characters, resulting in many blocks.
 
         long long checksum = 0;
-        for (auto [i, b] : std::views::enumerate(disk))
+        for (size_t i = 0; i < disk.size(); ++i)
         {
+            int b = disk[i];
             if (b != -1)
             {
                 checksum += i * b;
@@ -231,8 +231,9 @@ namespace aoc::day09
         // Your implementation here...
         auto file_id = 0;
         size_t current_position = 0;
-        for (auto [i, c] : std::views::enumerate(disk_map))
+        for (size_t i = 0; i < disk_map.size(); ++i)
         {
+            char c = disk_map[i];
             if (i % 2 == 0)
             {
                 file_spans.emplace_back(current_position, c - '0', file_id);

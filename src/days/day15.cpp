@@ -82,28 +82,32 @@ namespace aoc::day15
         warehouse.width = static_cast<int>(warehouse.grid[0].size());
         warehouse.height = static_cast<int>(warehouse.grid.size());
 
-        // Find robot position in map section (only)
         bool found_robot = false;
-        for (auto [y, row] : std::views::enumerate(warehouse.grid))
+        for (size_t y = 0; y < warehouse.grid.size(); ++y)
         {
-            if (auto at = std::ranges::find(row, '@'); at != row.end())
+            const auto& row = warehouse.grid[y];
+            for (size_t x = 0; x < row.size(); ++x)
             {
-                warehouse.robot_pos = Position{static_cast<int>(at - row.begin()), static_cast<int>(y)};
-                found_robot = true;
-                break;
+                if (row[x] == '@')
+                {
+                    warehouse.robot_pos = Position{static_cast<int>(x), static_cast<int>(y)};
+                    found_robot = true;
+                    break;
+                }
             }
+            if (found_robot) break;
         }
 
         if (!found_robot)
             throw std::runtime_error("Robot (@) not found in warehouse map");
 
-        // Concatenate instruction lines (may span multiple rows)
         std::string instructions;
         if (it != input.end())
         {
-            instructions = std::ranges::subrange{std::next(it), input.end()}
-                | std::views::join
-                | std::ranges::to<std::string>();
+            for (auto it2 = std::next(it); it2 != input.end(); ++it2)
+            {
+                instructions += *it2;
+            }
         }
 
         return {warehouse, instructions};
@@ -253,10 +257,12 @@ namespace aoc::day15
     long long calculate_gps_sum(const Warehouse& warehouse)
     {
         long long result = 0;
-        for (auto [y, row] : std::views::enumerate(warehouse.grid))
+        for (size_t y = 0; y < warehouse.grid.size(); ++y)
         {
-            for (auto [x, c] : std::views::enumerate(row))
+            const auto& row = warehouse.grid[y];
+            for (size_t x = 0; x < row.size(); ++x)
             {
+                char c = row[x];
                 if (c == 'O' || c == '[')
                 {
                     result += 100 * y + x;

@@ -166,15 +166,16 @@ namespace aoc::day12
     {
         long long result = 0;
         std::vector<std::vector<bool>> visited(input.size(), std::vector<bool>(input[0].size(), false));
-        for (auto [r, line] : std::ranges::views::enumerate(input))
+        for (size_t r = 0; r < input.size(); ++r)
         {
-            for (auto [c, type] : std::views::enumerate(line))
+            const auto& line = input[r];
+            for (size_t c = 0; c < line.size(); ++c)
             {
                 if (visited[r][c])
                 {
                     continue;
                 }
-                auto region = find_region(r, c, input, visited);
+                auto region = find_region(static_cast<int>(r), static_cast<int>(c), input, visited);
                 auto perimeter = calculate_perimeter(region, input);
                 result += region.cells.size() * perimeter;
             }
@@ -186,15 +187,16 @@ namespace aoc::day12
     {
         long long result = 0;
         std::vector<std::vector<bool>> visited(input.size(), std::vector<bool>(input[0].size(), false));
-        for (auto [r, line] : std::ranges::views::enumerate(input))
+        for (size_t r = 0; r < input.size(); ++r)
         {
-            for (auto [c, type] : std::views::enumerate(line))
+            const auto& line = input[r];
+            for (size_t c = 0; c < line.size(); ++c)
             {
                 if (visited[r][c])
                 {
                     continue;
                 }
-                auto region = find_region(r, c, input, visited);
+                auto region = find_region(static_cast<int>(r), static_cast<int>(c), input, visited);
                 auto corners = count_corners(region, input);
                 result += region.cells.size() * corners;
             }

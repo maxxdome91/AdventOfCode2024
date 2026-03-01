@@ -75,10 +75,12 @@ namespace aoc::day08
         const std::vector<std::string>& grid)
     {
         std::unordered_map<char, std::vector<Position>> antennas{};
-        for (auto [i, line] : std::views::enumerate(grid))
+        for (size_t i = 0; i < grid.size(); ++i)
         {
-            for (auto [j, c] : std::views::enumerate(line))
+            const auto& line = grid[i];
+            for (size_t j = 0; j < line.size(); ++j)
             {
+                char c = line[j];
                 if (isalnum(c))
                 {
                     antennas[c].push_back(Position{static_cast<int>(j), static_cast<int>(i)});

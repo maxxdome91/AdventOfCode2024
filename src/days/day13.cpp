@@ -42,11 +42,12 @@ namespace aoc::day13
             }
             return nums;
         };
-        for (auto const& block : input | std::views::chunk(4))
+        
+        for (size_t i = 0; i + 2 < input.size(); i += 4)
         {
-            auto a = get_nums(block[0]);
-            auto b = get_nums(block[1]);
-            auto p = get_nums(block[2]);
+            auto a = get_nums(input[i]);
+            auto b = get_nums(input[i + 1]);
+            auto p = get_nums(input[i + 2]);
 
             result.push_back({a[0], a[1], b[0], b[1], p[0], p[1]});
         }

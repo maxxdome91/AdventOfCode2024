@@ -1,29 +1,9 @@
 cmake_minimum_required(VERSION 3.20)
 project(AdventOfCode2024 LANGUAGES CXX)
 
-# Require C++23 with GCC (needed for std::views::enumerate)
+# Require C++23
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# Require GCC compiler (for full C++23 ranges support including std::views::enumerate)
-if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    message(FATAL_ERROR 
-        "GCC is required for full C++23 ranges support (std::views::enumerate).\n"
-        "Current compiler: ${CMAKE_CXX_COMPILER_ID}\n"
-        "Please set CMAKE_CXX_COMPILER to g++-15 or use:\n"
-        "  -DCMAKE_CXX_COMPILER=/opt/homebrew/bin/g++-15"
-    )
-endif()
-
-if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 15.0)
-    message(FATAL_ERROR 
-        "GCC 15 or newer is required for std::views::enumerate.\n"
-        "Current version: ${CMAKE_CXX_COMPILER_VERSION}\n"
-        "Please install GCC 15+ via Homebrew: brew install gcc"
-    )
-endif()
-
-message(STATUS "Using GCC ${CMAKE_CXX_COMPILER_VERSION} at ${CMAKE_CXX_COMPILER}")
 
 # Include directories
 include_directories(include)
